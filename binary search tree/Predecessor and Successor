@@ -1,0 +1,35 @@
+
+class Solution {
+    public ArrayList<Node> findPreSuc(Node root, int key) {
+        // code here
+        Node success = null;
+        Node pre = null;
+        Node cur = root;
+        while (root!=null){
+            if (key>=root.data){
+                root = root.right;
+            }
+            else{
+                if (success != null && root.data<success.data)
+                    success = root;
+                if (success == null) success = root;
+                root = root.left;
+            }
+        }
+        while (cur!=null){
+            if (key<=cur.data){
+                cur = cur.left;
+            }
+            else{
+                if (pre != null && cur.data>pre.data)
+                    pre = root;
+                if (pre == null) pre = cur;
+                cur = cur.right;
+            }
+        }
+        ArrayList<Node> result = new ArrayList<>();
+        result.add(pre);
+        result.add(success);
+        return result;
+    }
+}

@@ -1,0 +1,38 @@
+
+class Solution {
+    public void inorder(Node root,ArrayList<Integer> pat){
+        if (root!=null){
+            inorder(root.left,pat);
+            pat.add(root.data);
+            inorder(root.right,pat);
+        }
+    }
+    
+    public ArrayList<Integer> merge(Node root1, Node root2) {
+        ArrayList<Integer> rm1 = new ArrayList<> ();
+        ArrayList<Integer> rm2 = new ArrayList<> ();
+        ArrayList<Integer> merge = new ArrayList<> ();
+        inorder(root1,rm1);
+        inorder(root2,rm2);
+        int i=0,j=0;
+        while (i<rm1.size() && j<rm2.size()){
+            if (rm1.get(i)<=rm2.get(j)){
+                merge.add(rm1.get(i));
+                i++;
+            }
+            else{
+                merge.add(rm2.get(j));
+                j++;
+            }
+        }
+        while (i<rm1.size()){
+                merge.add(rm1.get(i));
+                i++;
+        }
+        while (j<rm2.size()){
+                merge.add(rm2.get(j));
+                j++;
+        }
+        return merge;
+    }
+}
