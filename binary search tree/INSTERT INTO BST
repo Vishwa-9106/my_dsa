@@ -1,0 +1,39 @@
+// insert into a binary search tree in iterative way
+class Solution {
+    public TreeNode insertIntoBST(TreeNode root, int val) {
+        if (root==null) return new TreeNode(val);
+        TreeNode cur=root;
+        TreeNode node = new TreeNode(val);
+        while (true){
+            if (val<root.val){
+                if( root.left==null){
+                    root.left = node;
+                    break;
+                }
+                root = root.left;
+            }
+            else{
+                if( root.right==null){
+                    root.right = node;
+                    break;
+                }
+                root = root.right;
+            }
+        }
+        return cur
+        ;
+    }
+}
+
+// insert into a binary search tree in recursive way
+
+class Solution {
+    public TreeNode insertIntoBST(TreeNode root, int val) {
+        if (root==null) return new TreeNode(val);
+        if (val<root.val)
+            root.left=insertIntoBST(root.left,val);
+        if (val>root.val)
+            root.right=insertIntoBST(root.right,val);
+        return root;
+    }
+}

@@ -1,0 +1,21 @@
+class Solution {
+    int res;
+    int c;
+    public void inorder(Node root,int k){
+        if (root!=null){
+            inorder(root.right,k);
+            c++;
+            if (c==k){
+                res = root.data;
+                return ;
+            }
+            inorder(root.left,k);
+        }
+    }
+    // return the Kth largest element in the given BST rooted at 'root'
+    public int kthLargest(Node root, int k) {
+        // Your code here
+        inorder(root,k);
+        return res;
+    }
+}
