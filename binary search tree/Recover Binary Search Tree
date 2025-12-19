@@ -1,0 +1,30 @@
+
+class Solution {
+    TreeNode p=null,f=null,m=null,l=null;
+    ArrayList<TreeNode> nd = new ArrayList<>();
+    public void recoverTreeHelper(TreeNode root) {
+        if (root!=null){
+            recoverTreeHelper(root.left);
+            if (p!=null && (root.val<p.val)){
+                if (f==null){
+                    f=p;
+                    m=root;
+                }
+                else
+                    l=root;
+            }
+            p = root;
+            recoverTreeHelper(root.right);
+        }
+    }
+    public void swap(TreeNode r,TreeNode l){
+        int x = r.val;
+        r.val= l.val;
+        l.val = x;
+    }
+    public void recoverTree(TreeNode root) {
+        recoverTreeHelper(root);
+        if (f!=null && l!=null) swap(f,l);
+        else if (f!=null && m!=null) swap(f,m);
+    }
+}

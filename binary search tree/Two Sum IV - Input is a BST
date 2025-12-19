@@ -1,0 +1,19 @@
+class Solution {
+    HashSet<Integer> vals = new HashSet<>();
+    boolean res = false;
+    public void inorder(TreeNode root,int k){
+        if (root!=null){
+            inorder(root.left,k);
+            if (vals.contains(k-root.val)){
+                res = true;
+                return;
+            }
+            else vals.add(root.val);
+            inorder(root.right,k);
+        }
+    }
+    public boolean findTarget(TreeNode root, int k) {
+        inorder(root,k);
+        return res;
+    }
+}
