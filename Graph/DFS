@@ -1,0 +1,18 @@
+class Solution {
+    public void dfsHelper(ArrayList<ArrayList<Integer>> adj,int n,ArrayList<Integer> ans,boolean vis[]){
+        vis[n] = true;
+        ans.add(n);
+        for (Integer i : adj.get(n)){
+            if (!vis[i]) 
+                dfsHelper(adj,i,ans,vis);
+        }
+    }
+    public ArrayList<Integer> dfs(ArrayList<ArrayList<Integer>> adj) {
+        int v = adj.size();
+        ArrayList<Integer> ans = new ArrayList<>();
+        boolean vis[] = new boolean[v];
+        dfsHelper(adj,0,ans,vis);
+        return ans;
+        
+    }
+}
