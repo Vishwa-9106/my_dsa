@@ -1,0 +1,37 @@
+// bfs approach
+class Solution {
+    public boolean bfs(List<List<Integer>> adj,boolean vis[],int start){
+        Queue<int[]> qu = new LinkedList<>();
+        qu.add(new int[]{start,-1});
+        vis[start] = true;
+        while(!qu.isEmpty()){
+            int[] x= qu.poll();
+            int node= x[0];
+            int par = x[1];
+            for (int n : adj.get(node)){
+                if (!vis[n]){
+                    vis[n]=true;
+                    qu.add(new int[] {n,node});
+                }
+                else{
+                    if(n!=par) return true;
+                }
+            }
+        }
+        return false;
+    }
+    public boolean isCycle(int V, int[][] edges) {
+        List<List<Integer>> adj = new ArrayList<>();
+        for (int i=0 ;i<V;i++) 
+            adj.add(new ArrayList<>());
+        for (int i=0;i<edges.length;i++){
+            adj.get(edges[i][0]).add(edges[i][1]);
+            adj.get(edges[i][1]).add(edges[i][0]);
+        }
+        boolean vis[] = new boolean[V];
+        for (int i=0;i<V;i++){
+            if (!vis[i] && bfs(adj,vis,i)) return true;
+        }
+        return false;
+    }
+}

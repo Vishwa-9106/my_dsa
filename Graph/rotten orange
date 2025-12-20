@@ -1,0 +1,61 @@
+// LeetCode Problem 994: Rotting Oranges
+// bfs approach
+class Solution {
+    public int orangesRotting(int[][] grid) {
+        int ans = 0,f=0;
+        int mr=grid.length,mc=grid[0].length;
+        Queue<int[]> q = new LinkedList<>();
+        int[][] dr = new int[][]{{0,1},{0,-1},{1,0},{-1,0}};
+        for (int r =0; r<mr;r++){
+            for (int c = 0;c<mc;c++){
+                if (grid[r][c]==2) q.add(new int[]{r,c});
+                else if (grid[r][c]==1) f++;
+            }
+        }
+        while (!q.isEmpty() && f!=0){
+            ans++;
+            int l = q.size();
+            for (int i=0;i<l;i++){
+                int[] cur = q.poll();
+                int cr=cur[0],cc=cur[1];
+                for (int[] d:dr){
+                    if (0<=cr+d[0] && cr+d[0]<mr && 0<=cc+d[1] && cc+d[1]<mc && grid[cr+d[0]][cc+d[1]]==1){
+                        grid[cr+d[0]][cc+d[1]]=2;
+                        q.add(new int[]{cr+d[0],cc+d[1]});
+                        f--;
+                    }
+                }
+            }
+        }
+        if (f==0) return ans;
+        else return -1;
+    }
+}
+// dfs approach
+class Solution {
+    public int orangesRotting(int[][] grid) {
+        int ans = 0,f=0;
+        int mr=grid.length,mc=grid[0].length;
+        for (int r =0; r<mr;r++){
+            for (int c = 0;c<mc;c++){
+                if (grid[r][c]==2) dfs(grid,r,c,0);
+                else if (grid[r][c]==1) f++;
+            }
+        }
+        for (int r =0; r<mr;r++){
+            for (int c = 0;c<mc;c++){
+                if (grid[r][c]==1) return -1;
+                if (grid[r][c]>2) ans = Math.max(ans,grid[r][c]-2);
+            }
+        }
+        return ans;
+    }
+    private void dfs(int[][] grid, int r, int c, int t){
+        if (r<0 || r>=grid.length || c<0 || c>=grid[0].length || (grid[r][c]!=1 && grid[r][c]!=2 && grid[r][c]<=t)) return;
+        grid[r][c]=t+2;
+        dfs(grid,r+1,c,t+1);
+        dfs(grid,r-1,c,t+1);
+        dfs(grid,r,c+1,t+1);
+        dfs(grid,r,c-1,t+1);
+    }
+}
