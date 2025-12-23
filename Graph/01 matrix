@@ -1,0 +1,33 @@
+class Solution {
+    public int[][] updateMatrix(int[][] mat) {
+        int r = mat.length;
+        int c = mat[0].length;
+        int[][] dis = new int[r][c];
+        Queue<int []> qu = new LinkedList<>();
+        for (int i =0 ;i<r;i++){
+            for (int j = 0;j<c;j++){
+                if (mat[i][j]==0){
+                    qu.add(new int[] {i,j});
+                    dis[i][j] = 0;
+                }else {
+                    dis[i][j] = Integer.MAX_VALUE;
+                }
+            }
+        }
+        int[][] dir = {{1,0},{-1,0},{0,1},{0,-1}};
+        while (!qu.isEmpty()){
+            int[] n = qu.poll();
+            for(int[] dr : dir){
+                int nr = dr[0]+n[0];
+                int nc = dr[1]+n[1];
+                if(nr>=0 && nr<r && nc>=0 && nc<c){
+                    if (dis[nr][nc] > dis[n[0]][n[1]] + 1) {
+                        dis[nr][nc] = dis[n[0]][n[1]] + 1;
+                        qu.add(new int[]{nr, nc});
+                    }
+                }
+            }
+        }
+        return dis;
+    }
+}

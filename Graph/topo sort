@@ -1,0 +1,54 @@
+// dfs approach
+class Solution {
+    public void dfs(ArrayList<ArrayList<Integer>> adj,boolean[] vis,int v,ArrayList<Integer> topo){
+        vis[v] = true;
+        for (int n : adj.get(v)){
+            if (!vis[n]){
+                dfs(adj,vis,n,topo);
+            }
+        }
+        topo.add(v);
+    }
+    public ArrayList<Integer> topoSort(int V, int[][] edges) {
+        // code here
+        ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
+        for (int i = 0;i<V;i++) adj.add(new ArrayList<>());
+        for (int i = 0;i<edges.length;i++){
+            adj.get(edges[i][0]).add(edges[i][1]);
+        }
+        ArrayList<Integer> topo = new ArrayList<>();
+        boolean[] vis = new boolean[V];
+        for (int i = 0;i<V;i++){
+            if (!vis[i]) dfs(adj,vis,i,topo);
+        }
+        Collections.reverse(topo);
+        return topo;
+    }
+}
+// bfs approach
+class Solution {
+    public ArrayList<Integer> topoSort(int V, int[][] edges) {
+        // code here
+        ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
+        int[] indegree = new int[V];
+        for (int i = 0;i<V;i++) adj.add(new ArrayList<>());
+        for (int i = 0;i<edges.length;i++){
+            adj.get(edges[i][0]).add(edges[i][1]);
+            indegree[edges[i]]++;
+        }
+        Queue<Integer> q = new LinkedList<>();
+        for (int i = 0;i<V;i++){
+            if (indegree[i]==0) q.add(i);
+        }
+        ArrayList<Integer> topo = new ArrayList<>();
+        while (!q.isEmpty()){
+            int node = q.poll();
+            topo.add(node);
+            for (int n : adj.get(node)){
+                indegree[n]--;
+                if (indegree[n]==0) q.add(n);
+            }
+        }
+        return topo;
+    }
+}
